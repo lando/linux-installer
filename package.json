@@ -1,0 +1,32 @@
+{
+  "name": "@lando/linux-installer",
+  "description": "A package for installing docker and its dependencies on Linux",
+  "version": "0.0.1",
+  "author": "John Ouellet @labboy0276",
+  "license": "GPL-3.0",
+  "repository": "github:lando/linux-installer",
+  "bugs": "https://github.com/lando/linux-installer/issues/new/choose/",
+  "homepage": "https://github.com/lando/linux-installer",
+  "keywords": [
+    "lando",
+    "linux"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/eslint-parser": "^7.15.7",
+    "chai": "^4",
+    "eslint": "^5.13",
+    "mocha": "^5",
+    "nyc": "^14",
+    "version-bump-prompt": "^6.1.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "release": "bump --tag --all --push package.json",
+    "test": "nyc mocha --forbid-only \"*.test.js\""
+  }
+}

@@ -1,0 +1,41 @@
+name: Run Tests
+
+on:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    env:
+      TERM: xterm
+    strategy:
+      matrix:
+        os:
+          - macos-10.15
+          - ubuntu-20.04
+          - windows-2019
+        node-version:
+          - '14'
+    steps:
+      # Install deps and cache
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install node ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+      - name: Install Yarn dependencies
+        run: yarn install --prefer-offline --frozen-lockfile
+
+      # Lint Code
+      - name: Lint code
+        run: yarn lint
+      # Unit tests
+      - name: Run unit tests
+        run: yarn test
+      # Dry run tests publish
+      - name: Test deploy
+        run: npm publish --access public --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_DEPLOY_TOKEN}}
